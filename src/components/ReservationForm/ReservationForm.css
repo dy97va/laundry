@@ -1,0 +1,10 @@
+/* .timePicker {
+	background-color: red;
+	width: 100px;
+	height: 100px;
+} */
+
+input {
+	min-height: 50px;
+	min-width: 50px;
+}
