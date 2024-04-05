@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Calendar from 'react-calendar'
-import 'react-calendar/dist/Calendar.css'
+import './DatePicker.css'
 
 export const DatePicker = ({ onChange }) => {
 	const [date, setDate] = useState(new Date())

@@ -1,11 +1,3 @@
-.top {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-	width: 70%;
-	padding: 30px;
-}
-
-.bookingBody {
-	padding: 40px;
+.laundryBody {
+	padding: 20px;
 }

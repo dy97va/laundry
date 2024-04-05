@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { db } from '../../firebase/firebase'
 import { ReservationForm } from '../ReservationForm/ReservationForm'
+import './ScheduleGrid.css'
 
 export const ScheduleGrid = ({ selectedDate }) => {
 	const [bookedSlots, setBookedSlots] = useState({})
@@ -9,7 +10,7 @@ export const ScheduleGrid = ({ selectedDate }) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const dateKey = selectedDate.toISOString().slice(0, 10) // Get the date in yyyy-mm-dd format
+				const dateKey = selectedDate.toISOString().slice(0, 10)
 				const scheduleRef = db.collection('schedule').doc(dateKey)
 				const doc = await scheduleRef.get()
 				if (doc.exists) {
@@ -52,26 +53,32 @@ export const ScheduleGrid = ({ selectedDate }) => {
 	}
 
 	return (
-		<div className='schedule-grid'>
-			<h2>Schedule for {selectedDate.toDateString()}</h2>
-			<button onClick={openReservationForm}>Make Reservation</button>
-			{showReservationForm && <ReservationForm selectedDate={selectedDate} onClose={closeReservationForm} />}
-			<table>
-				<thead>
-					<tr>
-						<th>Time</th>
-						<th>Status</th>
-					</tr>
-				</thead>
-				<tbody>
-					{timeSlots.map((time, index) => (
-						<tr key={index}>
-							<td>{time}</td>
-							<td>{getStatusForTime(time)}</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
+		<div className='schedule'>
+			<div>Schedule for {selectedDate.toDateString()}</div>
+			<div className='bottomPart'>
+				<div className='scheduleTable'>
+					<table>
+						<thead>
+							<tr>
+								<th>Time</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							{timeSlots.map((time, index) => (
+								<tr key={index}>
+									<td>{time}</td>
+									<td>{getStatusForTime(time)}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+				<div className='reservationButton'>
+					<button onClick={openReservationForm}>Make Reservation</button>
+					{showReservationForm && <ReservationForm selectedDate={selectedDate} onClose={closeReservationForm} />}
+				</div>
+			</div>
 		</div>
 	)
 }

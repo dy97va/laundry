@@ -1,3 +1,5 @@
+@import '../colors.css';
+
 .active {
 	background-color: #1d4ed8;
 }
@@ -6,7 +8,7 @@ nav {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: #0f172a;
+	background-color: var(--mainColor);
 	color: white;
 	position: sticky;
 	top: 0;

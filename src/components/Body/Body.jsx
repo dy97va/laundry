@@ -40,9 +40,13 @@ export const Body = () => {
 	}
 
 	return (
-		<div className='App'>
-			<DatePicker onChange={handleDateChange} />
-			<ScheduleGrid selectedDate={selectedDate} />
+		<div className='laundryBody'>
+			<div>
+				<DatePicker onChange={handleDateChange} />
+			</div>
+			<div className='schedule'>
+				<ScheduleGrid selectedDate={selectedDate} />
+			</div>
 		</div>
 	)
 }

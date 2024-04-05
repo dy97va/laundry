@@ -32,12 +32,14 @@ export const ReservationForm = ({ selectedDate, onClose }) => {
 
 	return (
 		<div className='reservation-form'>
-			<h2>Make Reservation</h2>
-			<h2>{selectedDate.toDateString()}</h2>
+			<div className='reservationFormHeading'>
+				<label>{selectedDate.toDateString()}</label>
+				<button onClick={onClose}>x</button>
+			</div>
 			<label>Start Time:</label>
-			<TimePicker className='timePicker' value={startTime} onChange={setStartTime} />
+			<TimePicker className='timePicker' value={startTime} clearIcon={null} disableClock onChange={setStartTime} />
 			<label>End Time:</label>
-			<TimePicker className='timePicker' value={endTime} onChange={setEndTime} />
+			<TimePicker className='timePicker' value={endTime} clearIcon={null} disableClock onChange={setEndTime} />
 			<button onClick={handleReservation}>Reserve</button>
 		</div>
 	)
