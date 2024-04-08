@@ -1,46 +1,86 @@
 import React, { useState } from 'react'
-import { TimePicker } from 'react-time-picker'
 import { db } from '../../firebase/firebase'
 import './ReservationForm.css'
+import dayjs from 'dayjs'
+import { MultiSectionDigitalClock } from '@mui/x-date-pickers/MultiSectionDigitalClock'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
-export const ReservationForm = ({ selectedDate, onClose }) => {
-	const [startTime, setStartTime] = useState('')
-	const [endTime, setEndTime] = useState('')
+export const ReservationForm = ({ selectedDate, onClose, bookedSlots }) => {
+	const [startTime, setStartTime] = useState(null)
+	const [endTime, setEndTime] = useState(null)
 
 	const handleReservation = async () => {
 		try {
-			const dateKey = selectedDate.toISOString().slice(0, 10) // Get the date in yyyy-mm-dd format
-			console.log(dateKey) //print dateKey to console to check if the date is correct
+			const dateKey = dayjs(selectedDate).format('YYYY-MM-DD')
 			const scheduleRef = db.collection('schedule').doc(dateKey)
-			const reservation = { startTime, endTime }
-			const bookedSlots = {}
 
-			// Create a single entry for the reservation with start and end times
-			bookedSlots[startTime] = { status: 'Booked', reservation }
+			const startTimeFormatted = dayjs(startTime).format('HH:mm')
+			const endTimeFormatted = dayjs(endTime).format('HH:mm')
 
-			await scheduleRef.set(
-				{
-					bookedSlots,
-				},
-				{ merge: true } // Merge with existing data
-			)
+			const overlappingReservation = Object.values(bookedSlots).find((slot) => {
+				const slotStartTime = slot.reservation.startTime
+				const slotEndTime = slot.reservation.endTime
+				return (
+					(startTimeFormatted >= slotStartTime && startTimeFormatted < slotEndTime) ||
+					(endTimeFormatted > slotStartTime && endTimeFormatted <= slotEndTime) ||
+					(startTimeFormatted <= slotStartTime && endTimeFormatted >= slotEndTime)
+				)
+			})
+
+			if (overlappingReservation) {
+				console.error('Cannot make reservation. Selected time overlaps with an existing reservation.')
+				return
+			}
+
+			const reservation = {
+				startTime: startTimeFormatted,
+				endTime: endTimeFormatted,
+			}
+
+			const newBookedSlots = {
+				...bookedSlots,
+				[startTimeFormatted]: { status: 'Booked', reservation },
+			}
+
+			await scheduleRef.set({ bookedSlots: newBookedSlots }, { merge: true })
 			onClose()
 		} catch (error) {
 			console.error('Error making reservation:', error)
 		}
 	}
 
+	const shouldDisableTime = (value) => {
+		const hour = dayjs(value).hour()
+		return hour < 6 || hour > 23
+	}
+
 	return (
-		<div className='reservation-form'>
-			<div className='reservationFormHeading'>
-				<label>{selectedDate.toDateString()}</label>
-				<button onClick={onClose}>x</button>
+		<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='fi'>
+			<div className='reservation-form'>
+				<div className='reservationFormHeading'>
+					<label>{selectedDate.toDateString()}</label>
+					<button onClick={onClose}>x</button>
+				</div>
+				<label>start time:</label>
+				<MultiSectionDigitalClock
+					value={startTime}
+					onChange={setStartTime}
+					ampm={false}
+					minutesStep={15}
+					skipDisabled={true}
+				/>
+				<label>end time:</label>
+				<MultiSectionDigitalClock
+					value={endTime}
+					onChange={setEndTime}
+					ampm={false}
+					minutesStep={15}
+					skipDisabled={true}
+					shouldDisableTime={shouldDisableTime}
+				/>
+				<button onClick={handleReservation}>Reserve</button>
 			</div>
-			<label>Start Time:</label>
-			<TimePicker className='timePicker' value={startTime} clearIcon={null} disableClock onChange={setStartTime} />
-			<label>End Time:</label>
-			<TimePicker className='timePicker' value={endTime} clearIcon={null} disableClock onChange={setEndTime} />
-			<button onClick={handleReservation}>Reserve</button>
-		</div>
+		</LocalizationProvider>
 	)
 }
