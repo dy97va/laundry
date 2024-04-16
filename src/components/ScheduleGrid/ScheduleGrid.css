@@ -1,28 +1,27 @@
 @import '../colors.css';
-/* 
 
-.bottomPart {
-	display: flex;
-	flex-direction: row;
+body.popUpOpen {
+	overflow: hidden;
 }
-
-.reservationButton {
-	margin-top: 50%;
-	margin-left: 20px;
+.overlay {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	/* margin: 0; */
+	position: fixed;
+	background: rgba(49, 49, 49, 0.8);
 }
-
-thead tr {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
-*/
 
 .schedule {
 	color: var(--mainTextColor);
 	margin-top: 10px;
 	background-color: var(--mainColor);
 	border-radius: 5px;
+	width: 350px;
+	max-width: 100%;
 }
 
 .scheduleGrid {
@@ -60,27 +59,60 @@ thead tr {
 
 .booked-slot {
 	position: absolute;
-	/* background-color: var(--secondaryColor); */
-	background-color: grey;
+	width: 200px;
+	display: flex;
+	flex-direction: row;
+	/* align-items: center; */
+	/* justify-content: space-between; */
+	z-index: 0;
+}
+
+.bookedSlotTime {
+	background-color: var(--inactiveColor);
+	height: 100%;
 	width: 100px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
 	border-radius: 5px;
+
+	/* position: absolute; */
+	/* background-color: var(--secondaryColor); */
+	/* background-color: var(--inactiveColor);
+	width: 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	border-radius: 5px;
+	z-index: 0; */
+}
+.bookedSlotUser {
+	width: 25%;
+	height: 25%;
+	min-height: fit-content;
+	min-width: fit-content;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: var(--inactiveColor);
+	border-radius: 5px;
+	margin-left: 10px;
 }
 
 .reservationButton .newreservation {
 	text-decoration: none;
 	border: none;
 	color: var(--mainTextColor);
-	background-color: #1da1f2;
-	height: fit-content;
-	width: fit-content;
-	border-radius: 25px;
-	font-size: larger;
+	background-color: var(--secondaryColor);
+	/* height: fit-content;
+	width: fit-content; */
+	border-radius: 20px;
+	font-size: 18px;
+	font-weight: bold;
 	padding: 10px;
 	position: fixed;
-	bottom: 5%;
-	right: 10%;
+	bottom: 3%;
+	right: 6%;
 }

@@ -6,14 +6,14 @@ import { MultiSectionDigitalClock } from '@mui/x-date-pickers/MultiSectionDigita
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
-export const ReservationForm = ({ selectedDate, onClose, bookedSlots }) => {
+export const ReservationForm = ({ selectedDate, onClose, bookedSlots, selectedMachine, uid, user }) => {
 	const [startTime, setStartTime] = useState(null)
 	const [endTime, setEndTime] = useState(null)
 
 	const handleReservation = async () => {
 		try {
-			const dateKey = dayjs(selectedDate).format('YYYY-MM-DD')
-			const scheduleRef = db.collection('schedule').doc(dateKey)
+			const dateKey = dayjs(selectedDate).format('DD-MM-YYYY')
+			const scheduleRef = db.collection(selectedMachine).doc(dateKey)
 
 			const startTimeFormatted = dayjs(startTime).format('HH:mm')
 			const endTimeFormatted = dayjs(endTime).format('HH:mm')
@@ -27,6 +27,25 @@ export const ReservationForm = ({ selectedDate, onClose, bookedSlots }) => {
 					(startTimeFormatted <= slotStartTime && endTimeFormatted >= slotEndTime)
 				)
 			})
+			if (!startTime || !endTime) {
+				console.error('cannot make a reservation, choose a start time and end time')
+				return
+			}
+
+			if (endTimeFormatted < startTimeFormatted) {
+				console.error('starting time cant be smaller than end time')
+				return
+			}
+
+			if (endTimeFormatted > '23:00') {
+				console.error('cannot make a reservation, latest time is 23:00')
+				return
+			}
+
+			if (startTimeFormatted < '06:00') {
+				console.error('cannot make a reservation, earliest time is 6:00')
+				return
+			}
 
 			if (overlappingReservation) {
 				console.error('Cannot make reservation. Selected time overlaps with an existing reservation.')
@@ -36,50 +55,62 @@ export const ReservationForm = ({ selectedDate, onClose, bookedSlots }) => {
 			const reservation = {
 				startTime: startTimeFormatted,
 				endTime: endTimeFormatted,
+				uid: uid,
+				room: user.room,
 			}
 
 			const newBookedSlots = {
 				...bookedSlots,
-				[startTimeFormatted]: { status: 'Booked', reservation },
+				[startTimeFormatted]: { reservation },
 			}
 
 			await scheduleRef.set({ bookedSlots: newBookedSlots }, { merge: true })
+
 			onClose()
 		} catch (error) {
 			console.error('Error making reservation:', error)
 		}
 	}
 
-	const shouldDisableTime = (value) => {
-		const hour = dayjs(value).hour()
-		return hour < 6 || hour > 23
-	}
-
 	return (
 		<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='fi'>
 			<div className='reservation-form'>
 				<div className='reservationFormHeading'>
-					<label>{selectedDate.toDateString()}</label>
-					<button onClick={onClose}>x</button>
+					<div className='reservationTitle'>
+						<label>{selectedDate.toDateString()}</label>
+						<label>{selectedMachine}</label>
+					</div>
+					<button className='closeButton' onClick={onClose}>
+						Cancel
+					</button>
 				</div>
-				<label>start time:</label>
-				<MultiSectionDigitalClock
-					value={startTime}
-					onChange={setStartTime}
-					ampm={false}
-					minutesStep={15}
-					skipDisabled={true}
-				/>
-				<label>end time:</label>
-				<MultiSectionDigitalClock
-					value={endTime}
-					onChange={setEndTime}
-					ampm={false}
-					minutesStep={15}
-					skipDisabled={true}
-					shouldDisableTime={shouldDisableTime}
-				/>
-				<button onClick={handleReservation}>Reserve</button>
+				<div className='reservationFormTimePickers'>
+					<div className='reservationFormTimePicker'>
+						<label>From:</label>
+						<MultiSectionDigitalClock
+							value={startTime}
+							onChange={setStartTime}
+							ampm={false}
+							minutesStep={15}
+							skipDisabled={true}
+						/>
+					</div>
+					<div className='reservationFormTimePicker'>
+						<label>Untill:</label>
+						<MultiSectionDigitalClock
+							value={endTime}
+							onChange={setEndTime}
+							ampm={false}
+							minutesStep={15}
+							skipDisabled={true}
+						/>
+					</div>
+				</div>
+				<div className='makeNewReservationButtonContainer'>
+					<button className='makeNewReservationButton' onClick={handleReservation}>
+						Confirm
+					</button>
+				</div>
 			</div>
 		</LocalizationProvider>
 	)

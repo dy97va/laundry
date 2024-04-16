@@ -2,15 +2,18 @@ import logo from './logo.svg'
 import './App.css'
 import { NavBar } from './components/NavBar/NavBar'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Body } from './components/Body/Body'
+import { Main } from './Pages/Main/Main'
+import { SignUpForm } from './components/Login/SignUpForm'
+import { Profile } from './Pages/Profile/Profile'
 
-function App() {
+export const App = () => {
 	return (
 		<BrowserRouter>
 			<NavBar />
-			<Body />
+			<Routes>
+				<Route path='/' element={<Main />} />
+				<Route path='/profile' element={<Profile />} />
+			</Routes>
 		</BrowserRouter>
 	)
 }
-
-export default App

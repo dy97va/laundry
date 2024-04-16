@@ -2,53 +2,56 @@ import React, { useEffect, useState } from 'react'
 import { db } from '../../firebase/firebase'
 import { ReservationForm } from '../ReservationForm/ReservationForm'
 import dayjs from 'dayjs'
+import { GetCurrentUser, GetUserUid } from '../../Auth/AuthMethods'
 import './ScheduleGrid.css'
 
-export const ScheduleGrid = ({ selectedDate }) => {
+export const ScheduleGrid = ({ selectedDate, selectedMachine }) => {
 	const [bookedSlots, setBookedSlots] = useState({})
 	const [showReservationForm, setShowReservationForm] = useState(false)
+	const user = GetCurrentUser()
+	const uid = GetUserUid()
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const dateKey = dayjs(selectedDate).format('YYYY-MM-DD')
-				const scheduleRef = db.collection('schedule').doc(dateKey)
+	const fetchData = async () => {
+		try {
+			if (selectedMachine) {
+				const dateKey = dayjs(selectedDate).format('DD-MM-YYYY')
+				const scheduleRef = db.collection(selectedMachine).doc(dateKey)
 				const doc = await scheduleRef.get()
 				if (doc.exists) {
-					setBookedSlots(doc.data().bookedSlots || {})
+					setBookedSlots(doc.data()?.bookedSlots || {})
 				} else {
 					setBookedSlots({})
 				}
-			} catch (error) {
-				console.error('Error fetching booked slots:', error)
 			}
+		} catch (error) {
+			console.error('Error fetching booked slots:', error)
 		}
-
+	}
+	useEffect(() => {
 		fetchData()
-	}, [selectedDate])
+	}, [selectedDate, selectedMachine])
 
 	const openReservationForm = () => {
-		setShowReservationForm(true)
+		if (user) {
+			if (selectedDate && selectedMachine) {
+				setShowReservationForm(true)
+				document.body.classList.add('popUpOpen')
+			}
+		} else {
+			console.log('log in to ,ake a reservation')
+		}
 	}
 
 	const closeReservationForm = () => {
 		setShowReservationForm(false)
+		fetchData()
+		document.body.classList.remove('popUpOpen')
 	}
 
 	const timeline = []
 	for (let hour = 6; hour < 24; hour++) {
 		const time = `${hour.toString().padStart(2, '0')}:00`
 		timeline.push(time)
-	}
-
-	const getStatusForTime = (time) => {
-		for (const startTime of Object.keys(bookedSlots)) {
-			const endTime = bookedSlots[startTime].reservation.endTime
-			if (time >= startTime && time <= endTime) {
-				return 'Booked'
-			}
-		}
-		return 'Available'
 	}
 
 	const calculatePositionAndHeight = (startTime, endTime) => {
@@ -90,19 +93,33 @@ export const ScheduleGrid = ({ selectedDate }) => {
 									top: `${position}px`,
 									height: `${height}px`,
 								}}>
-								<div>{slot.reservation.startTime}</div>
-								<div>{slot.reservation.endTime}</div>
+								<div className='bookedSlotTime'>
+									<div>{slot.reservation.startTime}</div>
+									<div>{slot.reservation.endTime}</div>
+								</div>
+								<div className='bookedSlotUser'>{slot.reservation.room}</div>
 							</div>
 						)
 					})}
 				</div>
+				{/* <div></div> */}
 			</div>
 			<div className='reservationButton'>
 				<button className='newreservation' onClick={openReservationForm}>
-					New
+					Add
 				</button>
 				{showReservationForm && (
-					<ReservationForm selectedDate={selectedDate} onClose={closeReservationForm} bookedSlots={bookedSlots} />
+					<>
+						<div onClick={closeReservationForm} className='overlay'></div>
+						<ReservationForm
+							selectedDate={selectedDate}
+							onClose={closeReservationForm}
+							bookedSlots={bookedSlots}
+							selectedMachine={selectedMachine}
+							user={user}
+							uid={uid}
+						/>
+					</>
 				)}
 			</div>
 		</div>

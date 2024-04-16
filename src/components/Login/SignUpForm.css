@@ -1,0 +1,68 @@
+.signUpForm {
+	width: 300px;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	background-color: var(--mainColor);
+}
+
+.closeButtonContainer {
+	display: flex;
+	justify-content: right;
+}
+
+.signUpForm h1 {
+	text-align: center;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+}
+
+.label {
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.form-control {
+	padding: 10px;
+	margin-bottom: 15px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.btn-box {
+	display: flex;
+	justify-content: center;
+}
+
+.signUpFormButton {
+	padding: 10px 15px;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.signUpFormButton:hover {
+	background-color: #0056b3;
+}
+
+p {
+	margin-top: 15px;
+	text-align: center;
+}
+
+p button {
+	background-color: transparent;
+	border: none;
+	color: #007bff;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+p button:hover {
+	text-decoration: none;
+}

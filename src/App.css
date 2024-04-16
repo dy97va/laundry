@@ -2,6 +2,7 @@
 
 .App {
 	text-align: center;
+	background-color: aliceblue;
 }
 
 Body {
@@ -13,6 +14,9 @@ Body {
 	pointer-events: none;
 }
 
+@media (max-width: 720px) {
+}
+
 @media (prefers-reduced-motion: no-preference) {
 	.App-logo {
 		animation: App-logo-spin infinite 20s linear;
@@ -20,7 +24,7 @@ Body {
 }
 
 .App-header {
-	background-color: #282c34;
+	background-color: white;
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;

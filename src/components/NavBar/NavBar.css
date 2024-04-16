@@ -1,7 +1,7 @@
 @import '../colors.css';
 
 .active {
-	background-color: #1d4ed8;
+	background-color: var(--secondaryColor);
 }
 
 nav {
@@ -9,9 +9,10 @@ nav {
 	justify-content: space-between;
 	align-items: center;
 	background-color: var(--mainColor);
-	color: white;
+	color: var(--mainTextColor);
 	position: sticky;
 	top: 0;
+	z-index: 10;
 }
 
 nav .title {
@@ -19,7 +20,7 @@ nav .title {
 	margin: 1rem;
 	font-weight: bold;
 	text-decoration: none;
-	color: white;
+	color: var(--mainTextColor);
 }
 
 nav ul {
@@ -33,14 +34,14 @@ nav ul li {
 nav ul li a {
 	display: block;
 	text-decoration: none;
-	color: white;
+	color: var(--mainTextColor);
 	padding: 0.5rem;
 	margin: 0 0.5rem;
 	border-radius: 0.5rem;
 }
 
 nav ul li a:not(.active):hover {
-	background-color: #172554;
+	background-color: var(--secondaryColor);
 }
 
 nav .menu {
@@ -64,9 +65,7 @@ nav .menu span {
 .languagePicker {
 	display: block;
 	text-decoration: none;
-	color: white;
-	padding: 0.5rem;
-	margin: 0 0.5rem;
+	color: var(--mainTextColor);
 	border-radius: 0.5rem;
 }
 
@@ -89,6 +88,7 @@ nav .menu span {
 
 	nav ul.open {
 		display: flex;
+		padding: 0;
 	}
 
 	nav ul li {

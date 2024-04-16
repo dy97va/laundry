@@ -1,9 +1,15 @@
 :root {
-	--bodyBackgroundColor: #4b6885;
+	--bodyBackgroundColor: white;
 	--mainColor: #183953;
 	--secondaryColor: #009bf9;
-	--buttonColor: lightBlue;
+	--inactiveColor: grey;
 	--mainTextColor: white;
 	--secondaryTextColor: black;
+	/* button colors */
+	--buttonColor: ;
 	--shadowColor: black;
+	/* calendar colors */
+	--calendarWeekend: salmon;
+	--calendarSelected: white;
+	/* #183953 */
 }

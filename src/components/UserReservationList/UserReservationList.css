@@ -1,0 +1,36 @@
+@import '../colors.css';
+
+.userReservationList {
+	width: 350px;
+	max-width: 100%;
+}
+
+.individualReservation {
+	background-color: var(--mainColor);
+	color: var(--mainTextColor);
+	margin: 10px;
+	padding: 10px;
+	display: flex;
+	flex-direction: row;
+	border-radius: 5px;
+	justify-content: space-between;
+	/* width: 350px; */
+	/* max-width: 100%; */
+}
+
+.reservationInfo {
+	display: flex;
+	flex-direction: column;
+}
+
+.deleteReservationButton {
+	border: none;
+	background-color: var(--secondaryColor);
+	color: var(--mainTextColor);
+	font-size: 12px;
+	font-weight: bolder;
+	padding: 10px;
+	border-radius: 20px;
+	height: fit-content;
+	cursor: pointer;
+}

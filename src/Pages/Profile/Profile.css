@@ -1,0 +1,23 @@
+.profileBody {
+	padding: 20px;
+}
+
+.logoutButtonContainer {
+	display: flex;
+	justify-content: right;
+	width: 100%;
+}
+
+.logoutButton {
+	border: none;
+	background-color: var(--secondaryColor);
+	color: var(--mainTextColor);
+	font-size: 14px;
+	font-weight: bolder;
+	padding: 10px;
+	border-radius: 20px;
+	height: fit-content;
+	width: fit-content;
+	cursor: pointer;
+	margin-right: 20px;
+}

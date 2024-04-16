@@ -1,0 +1,33 @@
+@import '../colors.css';
+
+.machinePicker {
+	width: 350px;
+	max-width: 100%;
+	height: 40px;
+	display: flex;
+	align-items: top;
+	justify-content: space-between;
+}
+
+.machinePicker Button {
+	width: 24%;
+	border: none;
+	/* font-size: 14px; */
+	height: 100%;
+	color: var(--mainTextColor);
+	word-wrap: normal;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.machinePicker Button:hover {
+	cursor: pointer;
+}
+
+.selected {
+	background-color: var(--mainColor);
+}
+
+.notSelected {
+	background-color: var(--inactiveColor);
+}
