@@ -39,7 +39,7 @@
 
 .signUpFormButton {
 	padding: 10px 15px;
-	background-color: #007bff;
+	background-color: var(--secondaryColor);
 	color: white;
 	border: none;
 	border-radius: 4px;
@@ -52,7 +52,9 @@
 
 p {
 	margin-top: 15px;
-	text-align: center;
+	justify-content: center;
+	display: flex;
+	align-items: center;
 }
 
 p button {

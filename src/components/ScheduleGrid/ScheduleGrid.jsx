@@ -4,10 +4,13 @@ import { ReservationForm } from '../ReservationForm/ReservationForm'
 import dayjs from 'dayjs'
 import { GetCurrentUser, GetUserUid } from '../../Auth/AuthMethods'
 import './ScheduleGrid.css'
+import { ErrorMessagePopup } from '../ErrorMessage/ErrorMessagePopup'
 
 export const ScheduleGrid = ({ selectedDate, selectedMachine }) => {
 	const [bookedSlots, setBookedSlots] = useState({})
 	const [showReservationForm, setShowReservationForm] = useState(false)
+	const [errorMessage, setErrorMessage] = useState('')
+	const [errorMessagePopupOpen, setErrormessagePopupOpen] = useState(false)
 	const user = GetCurrentUser()
 	const uid = GetUserUid()
 
@@ -36,10 +39,20 @@ export const ScheduleGrid = ({ selectedDate, selectedMachine }) => {
 			if (selectedDate && selectedMachine) {
 				setShowReservationForm(true)
 				document.body.classList.add('popUpOpen')
+			} else {
+				console.log('Select date and machine to add a new reservation')
+				setErrorMessage('Select date and machine to add a new reservation')
+				setErrormessagePopupOpen(true)
 			}
 		} else {
-			console.log('log in to ,ake a reservation')
+			console.log('Log in to make a reservation')
+			setErrorMessage('Log in to make a reservation')
+			setErrormessagePopupOpen(true)
 		}
+	}
+
+	const closeErrorMessagePopup = () => {
+		setErrormessagePopupOpen(false)
 	}
 
 	const closeReservationForm = () => {
@@ -110,7 +123,7 @@ export const ScheduleGrid = ({ selectedDate, selectedMachine }) => {
 				</button>
 				{showReservationForm && (
 					<>
-						<div onClick={closeReservationForm} className='overlay'></div>
+						{/* <div onClick={closeReservationForm} className='overlay'></div> */}
 						<ReservationForm
 							selectedDate={selectedDate}
 							onClose={closeReservationForm}
@@ -121,6 +134,7 @@ export const ScheduleGrid = ({ selectedDate, selectedMachine }) => {
 						/>
 					</>
 				)}
+				{errorMessagePopupOpen && <ErrorMessagePopup onClose={closeErrorMessagePopup} errorMessage={errorMessage} />}
 			</div>
 		</div>
 	)

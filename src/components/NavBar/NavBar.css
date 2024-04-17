@@ -2,13 +2,14 @@
 
 .active {
 	background-color: var(--secondaryColor);
+	text-decoration: underline;
 }
 
 nav {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: var(--mainColor);
+	background-color: var(--secondaryColor);
 	color: var(--mainTextColor);
 	position: sticky;
 	top: 0;
@@ -37,7 +38,18 @@ nav ul li a {
 	color: var(--mainTextColor);
 	padding: 0.5rem;
 	margin: 0 0.5rem;
-	border-radius: 0.5rem;
+	border-radius: 5px;
+}
+
+.LoginNavBar {
+	display: block;
+	text-decoration: none;
+	color: var(--mainTextColor);
+	padding: 0.5rem;
+	margin: 0 0.5rem;
+	border-radius: 5px;
+	cursor: pointer;
+	/* background-color: red; */
 }
 
 nav ul li a:not(.active):hover {
@@ -88,7 +100,9 @@ nav .menu span {
 
 	nav ul.open {
 		display: flex;
+		align-self: center;
 		padding: 0;
+		width: 50%;
 	}
 
 	nav ul li {

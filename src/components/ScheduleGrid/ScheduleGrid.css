@@ -12,7 +12,7 @@ body.popUpOpen {
 	bottom: 0;
 	/* margin: 0; */
 	position: fixed;
-	background: rgba(49, 49, 49, 0.8);
+	background: rgba(0, 0, 0, 0.7);
 }
 
 .schedule {
@@ -22,6 +22,7 @@ body.popUpOpen {
 	border-radius: 5px;
 	width: 350px;
 	max-width: 100%;
+	position: relative;
 }
 
 .scheduleGrid {
@@ -102,17 +103,31 @@ body.popUpOpen {
 }
 
 .reservationButton .newreservation {
-	text-decoration: none;
+	/* text-decoration: none;
 	border: none;
 	color: var(--mainTextColor);
 	background-color: var(--secondaryColor);
-	/* height: fit-content;
-	width: fit-content; */
 	border-radius: 20px;
-	font-size: 18px;
+	
 	font-weight: bold;
-	padding: 10px;
+	padding: 10px; */
+	font-size: 18px;
+	padding: 10px 15px;
+	background-color: var(--secondaryColor);
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+
+	/* position: sticky;
+	bottom: 0;
+	right: 10px; */
 	position: fixed;
 	bottom: 3%;
-	right: 6%;
+	right: calc(50% - 170px);
+}
+
+@media (min-width: 720px) {
+	.reservationButton .newreservation {
+	}
 }

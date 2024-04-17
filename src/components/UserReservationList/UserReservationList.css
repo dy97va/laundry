@@ -24,7 +24,7 @@
 }
 
 .deleteReservationButton {
-	border: none;
+	/* border: none;
 	background-color: var(--secondaryColor);
 	color: var(--mainTextColor);
 	font-size: 12px;
@@ -32,5 +32,13 @@
 	padding: 10px;
 	border-radius: 20px;
 	height: fit-content;
+	cursor: pointer; */
+
+	padding: 10px 15px;
+	background-color: var(--secondaryColor);
+	color: var(--mainTextColor);
+	border: none;
+	border-radius: 5px;
 	cursor: pointer;
+	height: fit-content;
 }

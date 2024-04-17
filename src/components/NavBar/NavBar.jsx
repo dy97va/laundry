@@ -9,12 +9,7 @@ export const NavBar = () => {
 	const [menuOpen, setMenuOpen] = useState(false)
 	const [loginFormOpen, setLoginFormOpen] = useState(false)
 	const [signUpFormOpen, setSignUpFormOpen] = useState(false)
-	const [language, setLanguage] = useState('eng')
 	const user = GetCurrentUser()
-
-	const handleLanguageChange = (lang) => {
-		setLanguage(lang)
-	}
 
 	const openLoginForm = () => {
 		setLoginFormOpen(true)
@@ -39,9 +34,9 @@ export const NavBar = () => {
 				</li>
 				<li>
 					{!user && (
-						<li>
-							<div onClick={() => setLoginFormOpen(!loginFormOpen)}>Login/Signup</div>
-						</li>
+						<div className='LoginNavBar' onClick={() => setLoginFormOpen(!loginFormOpen)}>
+							Login/Signup
+						</div>
 					)}
 
 					{loginFormOpen && (
@@ -75,15 +70,6 @@ export const NavBar = () => {
 							Profile
 						</NavLink>
 					)}
-				</li>
-				<li className='languagePicker' onClick={() => handleLanguageChange('rus')}>
-					РУС
-				</li>
-				<li className='languagePicker' onClick={() => handleLanguageChange('fin')}>
-					SUO
-				</li>
-				<li className='languagePicker' onClick={() => handleLanguageChange('eng')}>
-					ENG
 				</li>
 			</ul>
 		</nav>
