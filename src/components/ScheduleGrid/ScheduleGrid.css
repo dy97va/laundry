@@ -91,7 +91,7 @@ body.popUpOpen {
 }
 .bookedSlotUser {
 	width: 25%;
-	height: 25%;
+	height: fit-content;
 	min-height: fit-content;
 	min-width: fit-content;
 	display: flex;
@@ -125,9 +125,4 @@ body.popUpOpen {
 	position: fixed;
 	bottom: 3%;
 	right: calc(50% - 170px);
-}
-
-@media (min-width: 720px) {
-	.reservationButton .newreservation {
-	}
 }

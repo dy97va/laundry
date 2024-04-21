@@ -12,6 +12,7 @@ export const UserReservationList = () => {
 	const fetchUserReservations = async () => {
 		const reservations = []
 		for (const reservationCollection of reservationCollections) {
+			console.log(reservationCollection)
 			try {
 				const querySnapshot = await db.collection(reservationCollection).get()
 
@@ -31,13 +32,14 @@ export const UserReservationList = () => {
 						}
 					}
 				})
-
-				setUserReservations(reservations)
 			} catch (error) {
 				console.error('Error fetching user reservations:', error)
 			}
 		}
+		setUserReservations(reservations)
 	}
+
+	console.log(userReservations)
 
 	const handleDeleteReservation = async (reservationId, machine, startTime) => {
 		try {
