@@ -115,7 +115,6 @@ export const ScheduleGrid = ({ selectedDate, selectedMachine }) => {
 						)
 					})}
 				</div>
-				{/* <div></div> */}
 			</div>
 			<div className='reservationButton'>
 				<button className='newreservation' onClick={openReservationForm}>
@@ -123,7 +122,6 @@ export const ScheduleGrid = ({ selectedDate, selectedMachine }) => {
 				</button>
 				{showReservationForm && (
 					<>
-						{/* <div onClick={closeReservationForm} className='overlay'></div> */}
 						<ReservationForm
 							selectedDate={selectedDate}
 							onClose={closeReservationForm}

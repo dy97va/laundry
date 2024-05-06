@@ -10,7 +10,6 @@ body.popUpOpen {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	/* margin: 0; */
 	position: fixed;
 	background: rgba(0, 0, 0, 0.7);
 }
@@ -52,7 +51,6 @@ body.popUpOpen {
 }
 
 .scheduleTitle {
-	/* background-color: red; */
 	padding: 10px;
 	display: flex;
 	justify-content: center;
@@ -63,8 +61,7 @@ body.popUpOpen {
 	width: 200px;
 	display: flex;
 	flex-direction: row;
-	/* align-items: center; */
-	/* justify-content: space-between; */
+
 	z-index: 0;
 }
 
@@ -77,18 +74,8 @@ body.popUpOpen {
 	align-items: center;
 	justify-content: space-between;
 	border-radius: 5px;
-
-	/* position: absolute; */
-	/* background-color: var(--secondaryColor); */
-	/* background-color: var(--inactiveColor);
-	width: 100px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-between;
-	border-radius: 5px;
-	z-index: 0; */
 }
+
 .bookedSlotUser {
 	width: 25%;
 	height: fit-content;
@@ -100,17 +87,10 @@ body.popUpOpen {
 	background-color: var(--inactiveColor);
 	border-radius: 5px;
 	margin-left: 10px;
+	padding: 10px;
 }
 
 .reservationButton .newreservation {
-	/* text-decoration: none;
-	border: none;
-	color: var(--mainTextColor);
-	background-color: var(--secondaryColor);
-	border-radius: 20px;
-	
-	font-weight: bold;
-	padding: 10px; */
 	font-size: 18px;
 	padding: 10px 15px;
 	background-color: var(--secondaryColor);
@@ -118,10 +98,6 @@ body.popUpOpen {
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
-
-	/* position: sticky;
-	bottom: 0;
-	right: 10px; */
 	position: fixed;
 	bottom: 3%;
 	right: calc(50% - 170px);

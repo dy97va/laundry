@@ -1,18 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import { db } from '../../firebase/firebase'
-import { GetUserUid } from '../../Auth/AuthMethods'
+import { GetCurrentUser, GetUserUid } from '../../Auth/AuthMethods'
 import './UserReservationList.css'
 import { deleteField } from '@firebase/firestore'
 
-export const UserReservationList = () => {
+export const UserReservationList = ({ uid }) => {
 	const [userReservations, setUserReservations] = useState([])
-	const reservationCollections = ['Ketunpolku H', 'Ketunpolku I', 'Opintie 1', 'Opintie 2']
-	const uid = GetUserUid()
+	const [reservationCollections, setReservationCollections] = useState([])
+	const user = GetCurrentUser()
+
+	const fetchMachineList = async () => {
+		try {
+			if (user) {
+				const machinesSnapshot = await db.collection('addresses').doc(user.userAddress).get()
+				const machinesData = machinesSnapshot.data()
+				if (machinesData && machinesData.machines) {
+					setReservationCollections(machinesData.machines)
+				} else {
+					console.log('No machines found for the current user address')
+				}
+			} else {
+				console.log('No user found')
+			}
+		} catch (error) {
+			console.log('Error fetching machine list:', error)
+		}
+	}
 
 	const fetchUserReservations = async () => {
 		const reservations = []
+		console.log(reservationCollections)
 		for (const reservationCollection of reservationCollections) {
-			console.log(reservationCollection)
 			try {
 				const querySnapshot = await db.collection(reservationCollection).get()
 
@@ -39,8 +57,6 @@ export const UserReservationList = () => {
 		setUserReservations(reservations)
 	}
 
-	console.log(userReservations)
-
 	const handleDeleteReservation = async (reservationId, machine, startTime) => {
 		try {
 			await db
@@ -56,8 +72,16 @@ export const UserReservationList = () => {
 	}
 
 	useEffect(() => {
-		fetchUserReservations()
-	}, [uid])
+		if (user) {
+			fetchMachineList()
+		}
+	}, [uid, user])
+
+	useEffect(() => {
+		if (reservationCollections.length > 0) {
+			fetchUserReservations()
+		}
+	}, [reservationCollections])
 
 	return (
 		<div>

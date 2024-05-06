@@ -1,0 +1,70 @@
+.adminPanelBody {
+	padding: 25px;
+	/* background-color: red; */
+	display: flex;
+	flex-direction: column;
+	color: white;
+
+	/* max-width: 100%;
+	width: 450%; */
+}
+
+.addressField {
+	display: flex;
+	box-shadow: 0 0 5px darkgray;
+	border-radius: 5px;
+	padding: 10px;
+	cursor: pointer;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+	background-color: var(--mainColor);
+	width: 90%;
+	max-width: 450px;
+	/* width: 350px; */
+}
+.machineField {
+	background-color: var(--mainColor);
+	display: flex;
+	margin-bottom: 10px;
+	box-shadow: 0 0 5px darkgray;
+	border-radius: 5px;
+	padding: 10px;
+	cursor: pointer;
+	justify-content: space-between;
+	align-items: center;
+	width: 80%;
+	max-width: 400px;
+	margin-left: 10%;
+}
+
+.newForm {
+	background-color: var(--mainColor);
+	display: flex;
+	margin-bottom: 10px;
+	box-shadow: 0 0 5px darkgray;
+	border-radius: 5px;
+	padding: 10px;
+	cursor: pointer;
+	justify-content: space-between;
+	align-items: center;
+	width: 80%;
+	max-width: 400px;
+	margin-left: 10%;
+}
+
+input {
+	padding: 10px;
+	margin-right: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.adminPanelBody button {
+	padding: 10px 25px;
+	background-color: var(--secondaryColor);
+	color: var(--mainTextColor);
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}

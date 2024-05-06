@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { auth, db } from '../../firebase/firebase'
 import './SignUpForm.css'
 
@@ -7,6 +7,8 @@ export const SignUpForm = ({ showLoginForm, onClose }) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [room, setRoom] = useState('')
+	const [userAddress, setUserAddress] = useState('')
+	const [addressList, setAddressList] = useState([])
 
 	const handleSignUp = async (event) => {
 		event.preventDefault()
@@ -17,6 +19,7 @@ export const SignUpForm = ({ showLoginForm, onClose }) => {
 					db.collection('users').doc(credentials.user.uid).set({
 						email: email,
 						name: name,
+						userAddress: userAddress,
 						room: room,
 					})
 				})
@@ -27,6 +30,23 @@ export const SignUpForm = ({ showLoginForm, onClose }) => {
 			console.log(error)
 		}
 	}
+	const fetchAddressList = async () => {
+		try {
+			const addressRef = await db.collection('addresses').get()
+			const addresses = []
+			addressRef.forEach((doc) => {
+				addresses.push({ id: doc.id, data: doc.data() })
+			})
+			setAddressList(addresses)
+			console.log(addresses)
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	useEffect(() => {
+		fetchAddressList()
+	}, [])
 
 	return (
 		<div className='modalBackdrop'>
@@ -46,6 +66,15 @@ export const SignUpForm = ({ showLoginForm, onClose }) => {
 						value={name}
 						onChange={(event) => setName(event.target.value)}
 					/>
+					<label>Address</label>
+					<select value={userAddress} onChange={(event) => setUserAddress(event.target.value)}>
+						<option value=''>Select an address</option>
+						{addressList.map((address) => (
+							<option key={address.id} value={address.id}>
+								{address.id}
+							</option>
+						))}
+					</select>
 					<label>Room</label>
 					<input
 						type='text'

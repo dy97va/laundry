@@ -26,10 +26,8 @@ export const LoginForm = ({ onClose, showSignupForm }) => {
 					</button>
 				</div>
 				<h1>login</h1>
-				{/* translate */}
 				<form className='form' autoComplete='off' onSubmit={handleLogin}>
 					<label>Email</label>
-					{/* translate */}
 					<input
 						type='email'
 						className='form-control'
@@ -37,7 +35,6 @@ export const LoginForm = ({ onClose, showSignupForm }) => {
 						value={email}
 						onChange={(event) => setEmail(event.target.value)}></input>
 					<label>Password</label>
-					{/* translate */}
 					<input
 						type='password'
 						className='form-control'
@@ -48,13 +45,11 @@ export const LoginForm = ({ onClose, showSignupForm }) => {
 						<button className='loginFormButton' type='submit'>
 							LOGIN
 						</button>
-						{/* translate */}
 					</div>
 				</form>
 				<p>
 					Dont have an account yet? <button onClick={showSignupForm}>SignUp</button>
-				</p>{' '}
-				{/* translate */}
+				</p>
 			</div>
 		</div>
 	)

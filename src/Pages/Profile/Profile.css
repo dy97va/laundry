@@ -4,28 +4,17 @@
 
 .logoutButtonContainer {
 	display: flex;
-	justify-content: right;
+	justify-content: leftt;
 	width: 100%;
 }
 
 .logoutButton {
-	/* border: none;
-	background-color: var(--secondaryColor);
-	color: var(--mainTextColor);
 	font-size: 14px;
 	font-weight: bolder;
-	padding: 10px;
-	border-radius: 20px;
-	height: fit-content;
-	width: fit-content;
-	cursor: pointer; */
-	font-size: 14px;
-	font-weight: bolder;
-	margin-right: 20px;
+	margin-left: 10px;
 	padding: 10px 15px;
 	background-color: var(--secondaryColor);
 	color: var(--mainTextColor);
-
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;

@@ -1,6 +1,6 @@
 :root {
-	--bodyBackgroundColor: white;
-	--mainColor: #183953;
+	--bodyBackgroundColor: rgb(206, 202, 202);
+	--mainColor: #143769;
 	--secondaryColor: #009bf9;
 	--inactiveColor: grey;
 	--mainTextColor: white;

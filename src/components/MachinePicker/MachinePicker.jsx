@@ -1,8 +1,41 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './MachinePicker.css'
+import { GetCurrentUser } from '../../Auth/AuthMethods'
+import { db } from '../../firebase/firebase'
 
 export const MachinePicker = ({ onChange }) => {
 	const [selectedMachine, setSelectedMachine] = useState('')
+	const [machineList, setMachineList] = useState([])
+	const user = GetCurrentUser()
+
+	useEffect(
+		() => {
+			if (user) {
+				fetchMachineList()
+			}
+		},
+		[user],
+		[machineList]
+	)
+	console.log(machineList)
+
+	const fetchMachineList = async () => {
+		try {
+			if (user) {
+				const machinesSnapshot = await db.collection('addresses').doc(user.userAddress).get()
+				const machinesData = machinesSnapshot.data()
+				if (machinesData && machinesData.machines) {
+					setMachineList(machinesData.machines)
+				} else {
+					console.log('No machines found for the current user address')
+				}
+			} else {
+				console.log('No user found')
+			}
+		} catch (error) {
+			console.log('Error fetching machine list:', error)
+		}
+	}
 
 	const handleClick = (machine) => {
 		setSelectedMachine(machine)
@@ -10,29 +43,14 @@ export const MachinePicker = ({ onChange }) => {
 	}
 
 	return (
-		<>
-			<div className='machinePicker'>
+		<div className='machinePicker'>
+			{machineList.map((machine) => (
 				<button
-					className={selectedMachine === 'Ketunpolku H' ? 'selected' : 'notSelected'}
-					onClick={() => handleClick('Ketunpolku H')}>
-					Ketunpolku (H-Rapu)
+					className={selectedMachine === machine ? 'selected' : 'notSelected'}
+					onClick={() => handleClick(machine)}>
+					{machine}
 				</button>
-				<button
-					className={selectedMachine === 'Ketunpolku I' ? 'selected' : 'notSelected'}
-					onClick={() => handleClick('Ketunpolku I')}>
-					Ketunpolku (I-Rapu)
-				</button>
-				<button
-					className={selectedMachine === 'Opintie 1' ? 'selected' : 'notSelected'}
-					onClick={() => handleClick('Opintie 1')}>
-					Opintie (Kone1)
-				</button>
-				<button
-					className={selectedMachine === 'Opintie 2' ? 'selected' : 'notSelected'}
-					onClick={() => handleClick('Opintie 2')}>
-					Opintie (Kone2)
-				</button>
-			</div>
-		</>
+			))}
+		</div>
 	)
 }
