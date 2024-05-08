@@ -30,6 +30,7 @@ export const SignUpForm = ({ showLoginForm, onClose }) => {
 			console.log(error)
 		}
 	}
+
 	const fetchAddressList = async () => {
 		try {
 			const addressRef = await db.collection('addresses').get()

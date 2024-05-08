@@ -7,12 +7,12 @@ import { AdminPanel } from './Pages/AdminPanel/AdminPanel'
 
 export const App = () => {
 	return (
-		<BrowserRouter>
+		<BrowserRouter basename='/'>
 			<NavBar />
 			<Routes>
 				<Route path='/' element={<Main />} />
-				<Route path='/profile' element={<Profile />} />
-				<Route path='/admin-panel' element={<AdminPanel />} />
+				<Route path='profile' element={<Profile />} />
+				<Route path='admin-panel' element={<AdminPanel />} />
 			</Routes>
 		</BrowserRouter>
 	)

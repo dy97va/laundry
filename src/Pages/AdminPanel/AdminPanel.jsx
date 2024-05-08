@@ -92,6 +92,7 @@ export const AdminPanel = () => {
 
 	const handleAddNewMachine = async (addressId, newMachineData, event) => {
 		try {
+			event.preventDefault()
 			await db
 				.collection('addresses')
 				.doc(addressId)
@@ -101,6 +102,7 @@ export const AdminPanel = () => {
 
 			setNewMachine('')
 			fetchAddressList()
+			handleToggleMachineList(addressId)
 		} catch (error) {
 			console.error('Error adding new machine: ', error)
 		}
