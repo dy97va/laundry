@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { db } from '../../firebase/firebase'
-import { GetCurrentUser, GetUserUid } from '../../Auth/AuthMethods'
+import { GetCurrentUser } from '../../Auth/AuthMethods'
+import { ConfirmationModal } from '../ConfirmationModal/ConfirmationModal'
+import { DeleteReservation } from '../../Firestore/DeleteMethods'
 import './UserReservationList.css'
-import { deleteField } from '@firebase/firestore'
 
 export const UserReservationList = ({ uid }) => {
 	const [userReservations, setUserReservations] = useState([])
 	const [reservationCollections, setReservationCollections] = useState([])
 	const user = GetCurrentUser()
+	const [confirmationModalOpen, setConfirmationModalOpen] = useState(false)
+
+	const [reservationToDelete, setReservationToDelete] = useState()
+	const [reservationMachine, setReservationMachine] = useState()
+	const [startTimeToDelete, setStartTimeToDelete] = useState()
 
 	const fetchMachineList = async () => {
 		try {
@@ -29,7 +35,6 @@ export const UserReservationList = ({ uid }) => {
 
 	const fetchUserReservations = async () => {
 		const reservations = []
-		console.log(reservationCollections)
 		for (const reservationCollection of reservationCollections) {
 			try {
 				const querySnapshot = await db.collection(reservationCollection).get()
@@ -57,18 +62,17 @@ export const UserReservationList = ({ uid }) => {
 		setUserReservations(reservations)
 	}
 
-	const handleDeleteReservation = async (reservationId, machine, startTime) => {
-		try {
-			await db
-				.collection(machine)
-				.doc(reservationId)
-				.update({
-					[`bookedSlots.${startTime}`]: deleteField(),
-				})
-			fetchUserReservations()
-		} catch (error) {
-			console.error('Error deleting reservation:', error)
-		}
+	const confirmReservationDeletion = (reservation, machine, startTime) => {
+		setConfirmationModalOpen(true)
+		setReservationToDelete(reservation)
+		setReservationMachine(machine)
+		setStartTimeToDelete(startTime)
+	}
+
+	const handleDeleteReservation = (reservation, machine, startTime) => {
+		DeleteReservation(reservation, machine, startTime)
+		setConfirmationModalOpen(false)
+		fetchUserReservations()
 	}
 
 	useEffect(() => {
@@ -97,9 +101,16 @@ export const UserReservationList = ({ uid }) => {
 						</div>
 						<button
 							className='deleteReservationButton'
-							onClick={() => handleDeleteReservation(reservation.id, reservation.machine, reservation.startTime)}>
+							onClick={() => confirmReservationDeletion(reservation.id, reservation.machine, reservation.startTime)}>
 							delete/cancel
 						</button>
+						{confirmationModalOpen && (
+							<ConfirmationModal
+								onConfirm={() => handleDeleteReservation(reservationToDelete, reservationMachine, startTimeToDelete)}
+								onClose={() => setConfirmationModalOpen(false)}
+								confirmationMessage={'are you sure you want to cancel the reservation?'}
+							/>
+						)}
 					</div>
 				))}
 			</div>

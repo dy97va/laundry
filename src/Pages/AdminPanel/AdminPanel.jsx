@@ -4,14 +4,18 @@ import { db } from '../../firebase/firebase'
 import firebase from 'firebase/compat/app'
 import 'firebase/firestore'
 import './AdminPanel.css'
+import { ConfirmationModal } from '../../components/ConfirmationModal/ConfirmationModal'
 
 export const AdminPanel = () => {
-	// const user = GetCurrentUser()
-
 	const [addressList, setAddressList] = useState([])
-	const [newAddressFormOpen, setNewAddressFormOpen] = useState(false)
 	const [address, setAddress] = useState('')
 	const [newMachine, setNewMachine] = useState('')
+
+	const [newAddressFormOpen, setNewAddressFormOpen] = useState(false)
+	const [addressConfirmationModalOpen, setAddressConfirmationModalOpen] = useState(false)
+	const [machineConfirmationModalOpen, setMachineConfirmationModalOpen] = useState(false)
+	const [deletingAddressId, setDeletingAddressID] = useState()
+	const [machineToDelete, setMachineToDelete] = useState()
 
 	const handleToggleNewMachineForm = (addressId) => {
 		setAddressList((prevAddressList) =>
@@ -108,6 +112,17 @@ export const AdminPanel = () => {
 		}
 	}
 
+	const confirmAddressDeletion = (id) => {
+		setAddressConfirmationModalOpen(true)
+		setDeletingAddressID(id)
+	}
+
+	const confirmMachineDeletion = (id, machine) => {
+		setMachineConfirmationModalOpen(true)
+		setDeletingAddressID(id)
+		setMachineToDelete(machine)
+	}
+
 	return (
 		<div className='adminPanelBody'>
 			<div>
@@ -118,15 +133,29 @@ export const AdminPanel = () => {
 								<div onClick={() => handleToggleMachineList(address.id)}>
 									{address.machineListOpen ? '↓' : '→'}
 									{address.id}
+									{addressConfirmationModalOpen && (
+										<ConfirmationModal
+											confirmationMessage={' are you sure you want to delete address' + deletingAddressId}
+											onClose={() => setAddressConfirmationModalOpen(false)}
+											onConfirm={() => handleDeleteAddress(deletingAddressId)}
+										/>
+									)}
 								</div>
-								<button onClick={() => handleDeleteAddress(address.id)}>delete</button>
+								<button onClick={() => confirmAddressDeletion(address.id)}>delete</button>
 							</div>
 							{address.data.machines && address.machineListOpen && (
 								<div>
 									{Object.values(address.data.machines).map((machine) => (
 										<div className='machineField'>
 											<div key={machine}>{machine}</div>
-											<button onClick={() => handleDeleteMachine(address.id, machine)}>delete</button>
+											<button onClick={() => confirmMachineDeletion(address.id, machine)}>delete</button>
+											{machineConfirmationModalOpen && (
+												<ConfirmationModal
+													confirmationMessage={' are you sure you want to delete machine' + machineToDelete}
+													onClose={() => setMachineConfirmationModalOpen(false)}
+													onConfirm={() => handleDeleteMachine(deletingAddressId, machineToDelete)}
+												/>
+											)}
 										</div>
 									))}
 								</div>
