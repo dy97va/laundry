@@ -1,10 +1,5 @@
 @import '../colors.css';
 
-.active {
-	background-color: var(--secondaryColor);
-	text-decoration: underline;
-}
-
 nav {
 	display: flex;
 	justify-content: space-between;
@@ -33,27 +28,33 @@ nav ul li {
 }
 
 nav ul li a {
+	margin: 10px;
+	position: relative;
 	display: block;
+	font-weight: 600px;
+	font-size: 17px;
+	text-transform: uppercase;
+	transition: color 0.3s ease-in-out;
 	text-decoration: none;
 	color: var(--mainTextColor);
-	padding: 0.5rem;
-	margin: 0 0.5rem;
-	border-radius: 5px;
-}
-
-.LoginNavBar {
-	display: block;
-	text-decoration: none;
-	color: var(--mainTextColor);
-	padding: 0.5rem;
-	margin: 0 0.5rem;
-	border-radius: 5px;
 	cursor: pointer;
-	/* background-color: red; */
 }
 
-nav ul li a:not(.active):hover {
-	background-color: var(--secondaryColor);
+nav ul li ::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 1.5px;
+	background-color: var(--mainTextColor);
+	transform: scaleX(0);
+	transition: transform 0.3s ease-in-out;
+}
+
+nav ul li :hover::after,
+.active::after {
+	transform: scale(1);
 }
 
 nav .menu {
@@ -96,6 +97,7 @@ nav .menu span {
 		flex-direction: column;
 		width: 100%;
 		margin-bottom: 0.25rem;
+		align-items: center;
 	}
 
 	nav ul.open {
@@ -106,11 +108,7 @@ nav .menu span {
 	}
 
 	nav ul li {
-		width: 100%;
+		width: fit-content;
 		text-align: center;
-	}
-
-	nav ul li a {
-		margin: 0.2rem 0.5rem;
 	}
 }

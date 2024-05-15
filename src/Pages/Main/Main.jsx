@@ -8,7 +8,6 @@ import { MachinePicker } from '../../components/MachinePicker/MachinePicker'
 export const Main = () => {
 	const [selectedDate, setSelectedDate] = useState(new Date())
 	const [selectedMachine, setSelectedMachine] = useState('')
-	// const [schedule, setSchedule] = useState({ date: new Date(), slots: [] })
 
 	const handleDateChange = (date) => {
 		setSelectedDate(date)

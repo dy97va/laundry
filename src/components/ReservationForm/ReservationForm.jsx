@@ -25,6 +25,19 @@ export const ReservationForm = ({ selectedDate, onClose, bookedSlots, selectedMa
 			const startTimeFormatted = dayjs(startTime).format('HH:mm')
 			const endTimeFormatted = dayjs(endTime).format('HH:mm')
 
+			const duration = dayjs(endTime).diff(dayjs(startTime), 'minutes')
+
+			if (duration > 240) {
+				setErrorMessage('Cannot make reservation. Maximum reservation duration is 4 hours.')
+				setErrorMessagePopupOpen(true)
+				return
+			}
+			if (duration <= 0) {
+				setErrorMessage('Cannot make reservation. minimum reservation duration is 1 hour.')
+				setErrorMessagePopupOpen(true)
+				return
+			}
+
 			const overlappingReservation = Object.values(bookedSlots).find((slot) => {
 				const slotStartTime = slot.reservation.startTime
 				const slotEndTime = slot.reservation.endTime
@@ -34,16 +47,10 @@ export const ReservationForm = ({ selectedDate, onClose, bookedSlots, selectedMa
 					(startTimeFormatted <= slotStartTime && endTimeFormatted >= slotEndTime)
 				)
 			})
+
 			if (!startTime || !endTime) {
 				console.error('cannot make a reservation, choose a start time and end time')
 				setErrorMessage('cannot make a reservation, choose a start time and end time')
-				setErrorMessagePopupOpen(true)
-				return
-			}
-
-			if (endTimeFormatted < startTimeFormatted) {
-				console.error('starting time cant be smaller than end time')
-				setErrorMessage('starting time cant be smaller than end time')
 				setErrorMessagePopupOpen(true)
 				return
 			}

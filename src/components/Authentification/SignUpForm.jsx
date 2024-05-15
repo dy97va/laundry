@@ -13,7 +13,7 @@ export const SignUpForm = ({ showLoginForm, onClose }) => {
 	const handleSignUp = async (event) => {
 		event.preventDefault()
 		try {
-			await auth
+			const userCredentials = await auth
 				.createUserWithEmailAndPassword(email, password)
 				.then((credentials) => {
 					db.collection('users').doc(credentials.user.uid).set({
@@ -24,6 +24,7 @@ export const SignUpForm = ({ showLoginForm, onClose }) => {
 					})
 				})
 				.then(() => {
+					userCredentials.user.sendEmailVerification()
 					onClose()
 				})
 		} catch (error) {
@@ -68,7 +69,7 @@ export const SignUpForm = ({ showLoginForm, onClose }) => {
 						onChange={(event) => setName(event.target.value)}
 					/>
 					<label>Address</label>
-					<select value={userAddress} onChange={(event) => setUserAddress(event.target.value)}>
+					<select required value={userAddress} onChange={(event) => setUserAddress(event.target.value)}>
 						<option value=''>Select an address</option>
 						{addressList.map((address) => (
 							<option key={address.id} value={address.id}>

@@ -33,3 +33,13 @@ export const GetCurrentUser = () => {
 	}, [])
 	return user
 }
+
+export const Logout = async () => {
+	try {
+		await auth.signOut().then(() => {
+			console.log('signed out')
+		})
+	} catch (error) {
+		console.log(error)
+	}
+}

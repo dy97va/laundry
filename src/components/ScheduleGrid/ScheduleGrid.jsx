@@ -35,20 +35,19 @@ export const ScheduleGrid = ({ selectedDate, selectedMachine }) => {
 	}, [selectedDate, selectedMachine])
 
 	const openReservationForm = () => {
-		if (user) {
-			if (selectedDate && selectedMachine) {
-				setShowReservationForm(true)
-				document.body.classList.add('popUpOpen')
-			} else {
-				console.log('Select date and machine to add a new reservation')
-				setErrorMessage('Select date and machine to add a new reservation')
-				setErrormessagePopupOpen(true)
-			}
-		} else {
-			console.log('Log in to make a reservation')
+		if (!user) {
 			setErrorMessage('Log in to make a reservation')
 			setErrormessagePopupOpen(true)
+			return
 		}
+		if (!selectedDate || !selectedMachine) {
+			setErrorMessage('Select date and machine to add a new reservation')
+			setErrormessagePopupOpen(true)
+			return
+		}
+
+		setShowReservationForm(true)
+		document.body.classList.add('popUpOpen')
 	}
 
 	const closeErrorMessagePopup = () => {

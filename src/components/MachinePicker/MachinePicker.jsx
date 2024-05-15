@@ -17,7 +17,6 @@ export const MachinePicker = ({ onChange }) => {
 		[user],
 		[machineList]
 	)
-	console.log(machineList)
 
 	const fetchMachineList = async () => {
 		try {
