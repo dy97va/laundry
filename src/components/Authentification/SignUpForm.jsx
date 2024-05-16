@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { auth, db } from '../../firebase/firebase'
+import { fetchAddressList } from '../../Firestore/FirestoreMethods'
 import './SignUpForm.css'
 
 export const SignUpForm = ({ showLoginForm, onClose }) => {
@@ -32,22 +33,10 @@ export const SignUpForm = ({ showLoginForm, onClose }) => {
 		}
 	}
 
-	const fetchAddressList = async () => {
-		try {
-			const addressRef = await db.collection('addresses').get()
-			const addresses = []
-			addressRef.forEach((doc) => {
-				addresses.push({ id: doc.id, data: doc.data() })
-			})
-			setAddressList(addresses)
-			console.log(addresses)
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
 	useEffect(() => {
 		fetchAddressList()
+			.then((addresses) => setAddressList(addresses))
+			.catch((error) => console.log(error))
 	}, [])
 
 	return (

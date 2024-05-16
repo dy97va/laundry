@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { db } from '../../firebase/firebase'
 import { GetCurrentUser } from '../../Auth/AuthMethods'
 import { ConfirmationModal } from '../ConfirmationModal/ConfirmationModal'
-import { DeleteReservation } from '../../Firestore/DeleteMethods'
+import { fetchMachineList, fetchUserReservations, deleteReservation } from '../../Firestore/FirestoreMethods'
 import './UserReservationList.css'
 
 export const UserReservationList = ({ uid }) => {
@@ -15,77 +14,30 @@ export const UserReservationList = ({ uid }) => {
 	const [reservationMachine, setReservationMachine] = useState()
 	const [startTimeToDelete, setStartTimeToDelete] = useState()
 
-	const fetchMachineList = async () => {
-		try {
-			if (user) {
-				const machinesSnapshot = await db.collection('addresses').doc(user.userAddress).get()
-				const machinesData = machinesSnapshot.data()
-				if (machinesData && machinesData.machines) {
-					setReservationCollections(machinesData.machines)
-				} else {
-					console.log('No machines found for the current user address')
-				}
-			} else {
-				console.log('No user found')
-			}
-		} catch (error) {
-			console.log('Error fetching machine list:', error)
-		}
-	}
-
-	const fetchUserReservations = async () => {
-		const reservations = []
-		for (const reservationCollection of reservationCollections) {
-			try {
-				const querySnapshot = await db.collection(reservationCollection).get()
-
-				querySnapshot.forEach((doc) => {
-					const bookedSlots = doc.data().bookedSlots
-
-					for (const key in bookedSlots) {
-						const reservation = bookedSlots[key].reservation
-
-						if (reservation.uid === uid) {
-							reservations.push({
-								id: doc.id,
-								startTime: bookedSlots[key].reservation.startTime,
-								endTime: bookedSlots[key].reservation.endTime,
-								machine: reservationCollection,
-							})
-						}
-					}
-				})
-			} catch (error) {
-				console.error('Error fetching user reservations:', error)
-			}
-		}
-		setUserReservations(reservations)
-	}
-
-	const confirmReservationDeletion = (reservation, machine, startTime) => {
-		setConfirmationModalOpen(true)
-		setReservationToDelete(reservation)
-		setReservationMachine(machine)
-		setStartTimeToDelete(startTime)
-	}
-
-	const handleDeleteReservation = (reservation, machine, startTime) => {
-		DeleteReservation(reservation, machine, startTime)
-		setConfirmationModalOpen(false)
-		fetchUserReservations()
-	}
-
 	useEffect(() => {
 		if (user) {
-			fetchMachineList()
+			fetchMachineList(user).then((machines) => setReservationCollections(machines))
 		}
 	}, [uid, user])
 
 	useEffect(() => {
 		if (reservationCollections.length > 0) {
-			fetchUserReservations()
+			fetchUserReservations(reservationCollections, uid).then((reservations) => setUserReservations(reservations))
 		}
-	}, [reservationCollections])
+	}, [reservationCollections, uid])
+
+	const confirmReservationDeletion = (reservationId, machine, startTime) => {
+		setConfirmationModalOpen(true)
+		setReservationToDelete(reservationId)
+		setReservationMachine(machine)
+		setStartTimeToDelete(startTime)
+	}
+
+	const handleDeleteReservation = async () => {
+		await deleteReservation(reservationToDelete, reservationMachine, startTimeToDelete)
+		setConfirmationModalOpen(false)
+		fetchUserReservations(reservationCollections, uid).then((reservations) => setUserReservations(reservations))
+	}
 
 	return (
 		<div>
@@ -106,7 +58,7 @@ export const UserReservationList = ({ uid }) => {
 						</button>
 						{confirmationModalOpen && (
 							<ConfirmationModal
-								onConfirm={() => handleDeleteReservation(reservationToDelete, reservationMachine, startTimeToDelete)}
+								onConfirm={handleDeleteReservation}
 								onClose={() => setConfirmationModalOpen(false)}
 								confirmationMessage={'are you sure you want to cancel the reservation?'}
 							/>

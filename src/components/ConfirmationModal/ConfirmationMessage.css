@@ -22,7 +22,14 @@
 	justify-content: space-between;
 }
 
-.okErrorButton {
+.buttonsContainer {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	/* background-color: red; */
+}
+
+.confirmationButton {
 	padding: 10px 25px;
 	background-color: var(--secondaryColor);
 	color: var(--mainTextColor);
