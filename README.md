@@ -6,10 +6,10 @@ This project was built for managing laundry room reservations, in a student appa
 
 ## Features
 
-    - Authentication: Users can login and signup using email and password (Firebase auth services)
-    - Reservation management: Users can create, view and cancel reservations
-    - Address and machine management: Admins can add new addresses/machines/rooms to the list
-    - Responsive design: the app works on mobile and web
+    * Authentication: Users can login and signup using email and password (Firebase auth services)
+    * Reservation management: Users can create, view and cancel reservations
+    * Address and machine management: Admins can add new addresses/machines/rooms to the list
+    * Responsive design: the app works on mobile and web
 
 ## Firestore Structure
 
@@ -17,11 +17,15 @@ This project was built for managing laundry room reservations, in a student appa
     - addresses: Stores a list of addresses wirh list of machines/rooms availible for reservations
     - machines/rooms: a collection for each separate machine is then created to store the reservations for each separate date
 
-## Instructions
+## Setup and installation
 
-    - Clone the repository from https://github.com/dy97va/laundry.git
-    - Run npm install to install all the dependencies
-    - replace the code inside 'firebase/firebase' with your own firebase config
+    - Clone the repository with git clone https://github.com/dy97va/laundry.git
+    - Run npm install in project terminal to install all the dependencies
+    - firebase configuration:
+        - create a firebase project
+        - add a web app to your Firebase project and copy the firebase config object
+        - paste the firebase config object to /src/firebase/firebase/
+        - turn on the authentication in your Firebase project and add email authintication
     - Run npm start to test locally
     - build the project and deploy
 
