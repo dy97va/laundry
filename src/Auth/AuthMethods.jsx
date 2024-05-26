@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { db, auth } from '../firebase/firebase'
+import { sendPasswordResetEmail } from 'firebase/auth'
 
 export const GetUserUid = () => {
 	const [uid, setUid] = useState(null)
@@ -39,6 +40,14 @@ export const Logout = async () => {
 		await auth.signOut().then(() => {
 			console.log('signed out')
 		})
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const PasswordReset = async (email) => {
+	try {
+		await sendPasswordResetEmail(auth, email)
 	} catch (error) {
 		console.log(error)
 	}

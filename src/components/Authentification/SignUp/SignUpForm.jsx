@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { auth, db } from '../../firebase/firebase'
-import { fetchAddressList } from '../../Firestore/FirestoreMethods'
+import { auth, db } from '../../../firebase/firebase'
+import { fetchAddressList } from '../../../Firestore/FirestoreMethods'
 import './SignUpForm.css'
 
 export const SignUpForm = ({ showLoginForm, onClose }) => {

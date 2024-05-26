@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+# User reservation management system
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+This project was built for managing laundry room reservations, in a student appartment complex but can also be used for other scheduling purposes.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+    - Authentication: Users can login and signup using email and password (Firebase auth services)
+    - Reservation management: Users can create, view and cancel reservations
+    - Address and machine management: Admins can add new addresses/machines/rooms to the list
+    - Responsive design: the app works on mobile and web
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Firestore Structure
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    - users: Stores a list of user ids with emails, addresses, names and room numbers
+    - addresses: Stores a list of addresses wirh list of machines/rooms availible for reservations
+    - machines/rooms: a collection for each separate machine is then created to store the reservations for each separate date
 
-### `npm test`
+## Instructions
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    - Clone the repository from https://github.com/dy97va/laundry.git
+    - Run npm install to install all the dependencies
+    - replace the code inside 'firebase/firebase' with your own firebase config
+    - Run npm start to test locally
+    - build the project and deploy
 
-### `npm run build`
+## Project Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    - Auth: includes some of the firebase auth methods
+    - components: all the main components of the app
+        - AuthForms: login, sign up and password rest forms with corresponding methods
+        - ConfirmationModal: confirmation modal for deleting data
+        - DatePicker: react-calendar used for date selection
+        - ErrorMessage: error message modal for displaying errors to user
+        - LanguagePicker: element for choosing the language of the app, that is yet to be implemented
+        - MachinePicker: element for picking a machine/room for reservations
+        - NavBar: Navigation bar component
+        - ReservationForm: element for creating new reservations
+        - ScheduleGrid: displays the existing schedule/reservations to users for selected date and machine/room
+        - UserReservationList: displays user reservations with ability to cancel them
+        - colors: contains color scheme for the app
+    - firebase
+        - firebase: contains configuration for firebase web app
+    - Firestore:
+        - FirestoreMethods: contains data fetching and manipulation methods
+    - Pages
+        AdminPanel: admin page for room and address management
+        Main: main page with schedule grid
+        Profile: page where user can edit their reservations, (and info in the future)

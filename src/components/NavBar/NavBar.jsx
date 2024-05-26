@@ -1,19 +1,22 @@
 import React, { useState } from 'react'
 import './NavBar.css'
 import { Link, NavLink } from 'react-router-dom'
-import { LoginForm } from '../Authentification/LoginForm'
-import { SignUpForm } from '../Authentification/SignUpForm'
+import { LoginForm } from '../Authentification/Login/LoginForm'
+import { SignUpForm } from '../Authentification/SignUp/SignUpForm'
 import { GetUserUid, GetCurrentUser } from '../../Auth/AuthMethods'
+import { PasswordResetForm } from '../Authentification/PasswordReset/PasswordResetForm'
 
 export const NavBar = () => {
 	const [menuOpen, setMenuOpen] = useState(false)
 	const [loginFormOpen, setLoginFormOpen] = useState(false)
 	const [signUpFormOpen, setSignUpFormOpen] = useState(false)
+	const [passwordResetFormOpen, setPasswordResetFormOpen] = useState(false)
 	const user = GetCurrentUser()
 
 	const openLoginForm = () => {
 		setLoginFormOpen(true)
 		setSignUpFormOpen(false)
+		setPasswordResetFormOpen(false)
 	}
 
 	const profileLink = (
@@ -36,8 +39,15 @@ export const NavBar = () => {
 										setLoginFormOpen(!loginFormOpen)
 										setSignUpFormOpen(!signUpFormOpen)
 									}}
+									showPasswordResetForm={() => {
+										setLoginFormOpen(!loginFormOpen)
+										setPasswordResetFormOpen(!passwordResetFormOpen)
+									}}
 								/>
 							</>
+						)}
+						{passwordResetFormOpen && (
+							<PasswordResetForm onClose={() => setPasswordResetFormOpen(!passwordResetFormOpen)} />
 						)}
 						{signUpFormOpen && (
 							<>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { auth } from '../../firebase/firebase'
+import { auth } from '../../../firebase/firebase'
 import './LoginForm.css'
 
-export const LoginForm = ({ onClose, showSignupForm }) => {
+export const LoginForm = ({ onClose, showSignupForm, showPasswordResetForm }) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
@@ -47,6 +47,9 @@ export const LoginForm = ({ onClose, showSignupForm }) => {
 						</button>
 					</div>
 				</form>
+				<p>
+					Forgot you password stoopid? <button onClick={showPasswordResetForm}>Reset</button>
+				</p>
 				<p>
 					Dont have an account yet? <button onClick={showSignupForm}>SignUp</button>
 				</p>
