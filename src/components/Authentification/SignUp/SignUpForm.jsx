@@ -22,6 +22,7 @@ export const SignUpForm = ({ showLoginForm, onClose }) => {
 						name: name,
 						userAddress: userAddress,
 						room: room,
+						role: 'user',
 					})
 				})
 				.then(() => {
@@ -58,7 +59,11 @@ export const SignUpForm = ({ showLoginForm, onClose }) => {
 						onChange={(event) => setName(event.target.value)}
 					/>
 					<label>Address</label>
-					<select required value={userAddress} onChange={(event) => setUserAddress(event.target.value)}>
+					<select
+						className='signupSelect'
+						required
+						value={userAddress}
+						onChange={(event) => setUserAddress(event.target.value)}>
 						<option value=''>Select an address</option>
 						{addressList.map((address) => (
 							<option key={address.id} value={address.id}>
@@ -97,7 +102,10 @@ export const SignUpForm = ({ showLoginForm, onClose }) => {
 					</div>
 				</form>
 				<p>
-					Already have an account? <button onClick={showLoginForm}>Login</button>
+					Already have an account?{' '}
+					<button className='linkButton' onClick={showLoginForm}>
+						Login
+					</button>
 				</p>
 			</div>
 		</div>

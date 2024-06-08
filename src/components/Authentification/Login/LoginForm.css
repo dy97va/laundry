@@ -70,7 +70,7 @@ p {
 	align-items: center;
 }
 
-p button {
+.linkButton {
 	background-color: transparent;
 	border: none;
 	color: #007bff;
@@ -78,6 +78,6 @@ p button {
 	text-decoration: underline;
 }
 
-p button:hover {
+.linkButton:hover {
 	text-decoration: none;
 }

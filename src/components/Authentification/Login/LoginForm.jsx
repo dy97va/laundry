@@ -48,10 +48,16 @@ export const LoginForm = ({ onClose, showSignupForm, showPasswordResetForm }) =>
 					</div>
 				</form>
 				<p>
-					Forgot you password stoopid? <button onClick={showPasswordResetForm}>Reset</button>
+					Forgot you password stoopid?{' '}
+					<button className='linkButton' onClick={showPasswordResetForm}>
+						Reset
+					</button>
 				</p>
 				<p>
-					Dont have an account yet? <button onClick={showSignupForm}>SignUp</button>
+					Dont have an account yet?{' '}
+					<button className='linkButton' onClick={showSignupForm}>
+						SignUp
+					</button>
 				</p>
 			</div>
 		</div>

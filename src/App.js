@@ -4,6 +4,7 @@ import { NavBar } from './components/NavBar/NavBar'
 import { Main } from './Pages/Main/Main'
 import { Profile } from './Pages/Profile/Profile'
 import { AdminPanel } from './Pages/AdminPanel/AdminPanel'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 
 export const App = () => {
 	return (
@@ -12,7 +13,9 @@ export const App = () => {
 			<Routes>
 				<Route path='/' element={<Main />} />
 				<Route path='profile' element={<Profile />} />
-				<Route path='admin-panel' element={<AdminPanel />} />
+				<Route element={<ProtectedRoute />}>
+					<Route path='admin-panel' element={<AdminPanel />} />
+				</Route>
 			</Routes>
 		</BrowserRouter>
 	)

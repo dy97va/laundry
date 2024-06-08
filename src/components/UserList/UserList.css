@@ -1,0 +1,45 @@
+.userListField {
+	width: 1080px;
+	max-width: 100%;
+	background-color: var(--mainColor);
+	padding: 10px;
+	border-radius: 5px;
+	align-self: center;
+}
+
+.userListHeading {
+	display: flex;
+	justify-content: left;
+}
+
+.userListTile {
+	width: 23%;
+	padding: 2px;
+}
+
+.userListContainer {
+	border-bottom: 1px solid grey;
+}
+
+.userListItem {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+}
+
+.userListTileButtons {
+	display: flex;
+	justify-content: right;
+}
+
+.userlistButton {
+	background-color: transparent;
+	border: none;
+	color: var(--secondaryColor);
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.userlistButton:hover {
+	text-decoration: none;
+}

@@ -40,6 +40,7 @@ export const ScheduleGrid = ({ selectedDate, selectedMachine }) => {
 			setErrormessagePopupOpen(true)
 			return
 		}
+
 		if (!selectedDate || !selectedMachine) {
 			setErrorMessage('Select date and machine to add a new reservation')
 			setErrormessagePopupOpen(true)

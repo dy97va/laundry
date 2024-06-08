@@ -1,70 +1,54 @@
 .adminPanelBody {
 	padding: 25px;
-	/* background-color: red; */
 	display: flex;
 	flex-direction: column;
 	color: white;
-
-	/* max-width: 100%;
-	width: 450%; */
 }
 
-.addressField {
+.adminMenuPicker {
+	width: 200px;
 	display: flex;
-	box-shadow: 0 0 5px darkgray;
-	border-radius: 5px;
-	padding: 10px;
-	cursor: pointer;
+	align-self: center;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 10px;
-	background-color: var(--mainColor);
-	width: 90%;
-	max-width: 450px;
-	/* width: 350px; */
-}
-.machineField {
-	background-color: var(--mainColor);
-	display: flex;
-	margin-bottom: 10px;
-	box-shadow: 0 0 5px darkgray;
+	margin-bottom: 20px;
+	background-color: lightgray;
+	position: relative;
 	border-radius: 5px;
-	padding: 10px;
-	cursor: pointer;
-	justify-content: space-between;
-	align-items: center;
-	width: 80%;
-	max-width: 400px;
-	margin-left: 10%;
+	/* Ensure this container is the reference for the indicator */
 }
 
-.newForm {
-	background-color: var(--mainColor);
-	display: flex;
-	margin-bottom: 10px;
-	box-shadow: 0 0 5px darkgray;
-	border-radius: 5px;
-	padding: 10px;
-	cursor: pointer;
-	justify-content: space-between;
-	align-items: center;
-	width: 80%;
-	max-width: 400px;
-	margin-left: 10%;
-}
-
-input {
-	padding: 10px;
-	margin-right: 5px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
-
-.adminPanelBody button {
-	padding: 10px 25px;
-	background-color: var(--secondaryColor);
-	color: var(--mainTextColor);
+.adminMenuPicker button {
+	width: 50%;
+	background: none;
 	border: none;
-	border-radius: 4px;
+	padding: 10px;
 	cursor: pointer;
+	position: relative;
+	z-index: 1;
+	color: var(--secondaryColor);
+	transition: color 0.3s;
+}
+
+.adminMenuPicker button.active {
+	color: var(--mainTextColor);
+}
+
+.indicator {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 100%;
+	width: 50%;
+	border-radius: 5px;
+	background-color: var(--secondaryColor);
+	transition: transform 0.3s ease;
+}
+
+.indicator.users {
+	transform: translateX(0%);
+}
+
+.indicator.addresses {
+	transform: translateX(100%);
 }

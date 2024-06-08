@@ -6,10 +6,10 @@ This project was built for managing laundry room reservations, in a student appa
 
 ## Features
 
-    * Authentication: Users can login and signup using email and password (Firebase auth services)
-    * Reservation management: Users can create, view and cancel reservations
-    * Address and machine management: Admins can add new addresses/machines/rooms to the list
-    * Responsive design: the app works on mobile and web
+    - Authentication: Users can login and signup using email and password (Firebase auth services)
+    - Reservation management: Users can create, view and cancel reservations
+    - Address and machine management: Admins can add new addresses/machines/rooms to the list
+    - Responsive design: the app works on mobile and web
 
 ## Firestore Structure
 
@@ -22,6 +22,7 @@ This project was built for managing laundry room reservations, in a student appa
     - Clone the repository with git clone https://github.com/dy97va/laundry.git
     - Run npm install in project terminal to install all the dependencies
     - firebase configuration:
+        - run install firebase-admin
         - create a firebase project
         - add a web app to your Firebase project and copy the firebase config object
         - paste the firebase config object to /src/firebase/firebase/
@@ -33,6 +34,7 @@ This project was built for managing laundry room reservations, in a student appa
 
     - Auth: includes some of the firebase auth methods
     - components: all the main components of the app
+        - AddressList:  list of addresses for management through admin panel
         - AuthForms: login, sign up and password rest forms with corresponding methods
         - ConfirmationModal: confirmation modal for deleting data
         - DatePicker: react-calendar used for date selection
@@ -42,6 +44,7 @@ This project was built for managing laundry room reservations, in a student appa
         - NavBar: Navigation bar component
         - ReservationForm: element for creating new reservations
         - ScheduleGrid: displays the existing schedule/reservations to users for selected date and machine/room
+        - UserList: list of users for admin panel
         - UserReservationList: displays user reservations with ability to cancel them
         - colors: contains color scheme for the app
     - firebase

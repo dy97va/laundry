@@ -6,12 +6,28 @@ import firebase from 'firebase/compat/app'
 export const fetchAddressList = async () => {
 	try {
 		const addressRef = await db.collection('addresses').get()
-		const addresses = addressRef.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
+		const addresses = addressRef.docs.map((doc) => ({
+			id: doc.id,
+			data: doc.data(),
+		}))
 		return addresses
 	} catch (error) {
 		throw error
 	}
 }
+export const fetchUserList = async () => {
+	try {
+		const usersRef = await db.collection('users').get()
+		const userList = usersRef.docs.map((doc) => ({
+			id: doc.id,
+			data: doc.data(),
+		}))
+		return userList
+	} catch (error) {
+		console.log(error)
+	}
+}
+
 //Used in AdminPanel
 export const addNewAddress = async (address) => {
 	try {
@@ -53,6 +69,23 @@ export const deleteMachine = async (addressId, machine) => {
 			})
 	} catch (error) {
 		throw error
+	}
+}
+
+//new ones
+export const deleteUser = async (userId) => {
+	try {
+		await db.collection('users').doc(userId).delete()
+	} catch (error) {
+		throw new Error('Error deleting user: ' + error.message)
+	}
+}
+
+export const updateUser = async (userId, updatedData) => {
+	try {
+		await db.collection('users').doc(userId).update(updatedData)
+	} catch (error) {
+		throw new Error('Error updating user: ' + error.message)
 	}
 }
 

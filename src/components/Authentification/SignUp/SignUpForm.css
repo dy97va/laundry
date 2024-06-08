@@ -57,7 +57,7 @@ p {
 	align-items: center;
 }
 
-p button {
+.linkButton {
 	background-color: transparent;
 	border: none;
 	color: #007bff;
@@ -65,11 +65,11 @@ p button {
 	text-decoration: underline;
 }
 
-p button:hover {
+.linkButton:hover {
 	text-decoration: none;
 }
 
-select {
+.signupSelect {
 	padding: 10px;
 	margin-bottom: 15px;
 	border: 1px solid #ccc;

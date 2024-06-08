@@ -13,20 +13,23 @@ export const NavBar = () => {
 	const [passwordResetFormOpen, setPasswordResetFormOpen] = useState(false)
 	const user = GetCurrentUser()
 
-	const openLoginForm = () => {
-		setLoginFormOpen(true)
-		setSignUpFormOpen(false)
-		setPasswordResetFormOpen(false)
-	}
-
 	const profileLink = (
 		<>
 			{user ? (
-				<li>
-					<NavLink onClick={() => setMenuOpen(!menuOpen)} to='/profile'>
-						Profile
-					</NavLink>
-				</li>
+				<>
+					<li>
+						<NavLink onClick={() => setMenuOpen(!menuOpen)} to='/profile'>
+							Profile
+						</NavLink>
+					</li>
+					{user.role === 'admin' && (
+						<li>
+							<NavLink onClick={() => setMenuOpen(!menuOpen)} to='/admin-panel'>
+								admin-panel
+							</NavLink>
+						</li>
+					)}
+				</>
 			) : (
 				<>
 					<li>

@@ -18,9 +18,6 @@
 	width: 80%;
 	max-width: 350px;
 	box-shadow: 0 0 5px var(--shadowColor);
-	/* position: fixed; */
-	/* top: 25%; */
-	/* left: 7%; */
 	z-index: 99;
 	background-color: var(--mainColor);
 }
@@ -39,20 +36,9 @@
 .reservationTitle {
 	display: flex;
 	flex-direction: column;
-	/* background-color: red; */
 }
 
 .closeButton {
-	/* height: 30px;
-	width: 30px; */
-	/* border-radius: 50%; */
-	/* border: none;
-	background-color: var(--secondaryColor);
-	color: var(--mainTextColor);
-	font-size: 18px;
-	font-weight: bolder;
-	padding: 10px;
-	border-radius: 20px; */
 	padding: 10px 15px;
 	background-color: var(--secondaryColor);
 	color: var(--mainTextColor);
@@ -87,13 +73,6 @@
 }
 
 .makeNewReservationButton {
-	/* border: none;
-	background-color: var(--secondaryColor);
-	color: var(--mainTextColor);
-	font-size: 18px;
-	font-weight: bolder;
-	padding: 10px;
-	border-radius: 20px; */
 	padding: 10px 15px;
 	background-color: var(--secondaryColor);
 	color: var(--mainTextColor);
